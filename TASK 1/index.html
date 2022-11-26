@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List</title>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+	<h5>TO DO LIST</h5>
+	<div class="container">
+		<div class="task">
+			<input type="text" placeholder="Add a Task">
+			<button>Add</button>
+		</div>
+
+		<ol class="pending">
+			<h3>Still Pending :</h3>
+		</ol>
+
+		<ol class="done">
+			<h3>Successfully Completedm :</h3>
+		</ol>
+	</div>
+
+	<script>
+		const input = document.querySelector('input');
+		const btn = document.querySelector('.task > button');
+
+		btn.addEventListener('click', addList);
+		input.addEventListener('keyup', (e)=>{
+			(e.keyCode === 13 ? addList(e) : null);
+		})
+
+		function addList(e){
+			const pending = document.querySelector('.pending');
+			const done = document.querySelector('.done');
+
+			const newLi = document.createElement('li');
+			const checkBtn = document.createElement('button');
+			const delBtn = document.createElement('button');
+
+			checkBtn.innerHTML = '<i class="fa fa-check"></i>';
+			delBtn.innerHTML = '<i class="fa fa-trash"></i>';
+
+
+			if(input.value !==''){
+				newLi.textContent = input.value;
+				input.value = '';
+				pending.appendChild(newLi);
+				newLi.appendChild(checkBtn);
+				newLi.appendChild(delBtn);
+			}
+
+			checkBtn.addEventListener('click', function(){
+				const parent = this.parentNode;
+				parent.remove();
+				done.appendChild(parent);
+				checkBtn.style.display = 'none';
+			});
+
+			delBtn.addEventListener('click', function(){
+				const parent = this.parentNode;
+				parent.remove();
+			});
+		}
+
+	</script>
+</body>
+</html>
